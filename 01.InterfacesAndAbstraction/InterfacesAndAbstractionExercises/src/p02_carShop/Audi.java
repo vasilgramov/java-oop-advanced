@@ -66,7 +66,7 @@ public class Audi implements Rentable {
     }
 
     @Override
-    public double getPricePerDay() {
+    public Double getPricePerDay() {
         return this.pricePerDay;
     }
 

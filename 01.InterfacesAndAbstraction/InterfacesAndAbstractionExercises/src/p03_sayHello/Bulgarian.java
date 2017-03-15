@@ -1,6 +1,6 @@
 package p03_sayHello;
 
-public class Bulgarian extends BasePerson {
+public class Bulgarian extends BasePerson implements Person {
 
     public Bulgarian(String name) {
         super(name);

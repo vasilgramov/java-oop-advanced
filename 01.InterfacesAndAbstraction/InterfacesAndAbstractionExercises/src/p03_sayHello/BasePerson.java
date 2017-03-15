@@ -15,9 +15,4 @@ public abstract class BasePerson implements Person {
     public String getName() {
         return this.name;
     }
-
-    @Override
-    public String sayHello() {
-        return "Hello";
-    }
 }
