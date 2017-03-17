@@ -1,6 +1,6 @@
 package p03_scale;
 
-public class Scale<E extends Comparable<E>> {
+public class Scale<E extends Comparable<E> & Iterable<E>> {
     private E left;
     private E right;
 

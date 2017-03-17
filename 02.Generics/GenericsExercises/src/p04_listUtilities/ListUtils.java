@@ -1,7 +1,6 @@
 package p04_listUtilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListUtils {
