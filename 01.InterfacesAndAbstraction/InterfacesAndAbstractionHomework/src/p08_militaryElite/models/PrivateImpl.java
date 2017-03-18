@@ -18,4 +18,12 @@ public class PrivateImpl extends SoldierImpl implements Private {
     private void setSalary(double salary) {
         this.salary = salary;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        builder.append(String.format(" Salary: %.2f", this.getSalary()));
+
+        return builder.toString();
+    }
 }

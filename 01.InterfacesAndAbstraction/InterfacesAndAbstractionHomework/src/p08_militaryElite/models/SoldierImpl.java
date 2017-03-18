@@ -39,4 +39,12 @@ public abstract class SoldierImpl implements Soldier {
     private void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("Name: %s %s Id: %d", this.getName(), this.getLastName(), this.getId()));
+
+        return builder.toString();
+    }
 }

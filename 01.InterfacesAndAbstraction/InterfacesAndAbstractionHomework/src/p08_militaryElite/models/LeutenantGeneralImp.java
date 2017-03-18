@@ -19,7 +19,20 @@ public class LeutenantGeneralImp extends PrivateImpl implements LeutenantGeneral
         return this.privates;
     }
 
+    @Override
     public void addPrivate(Private privateSoldier) {
         this.privates.add(privateSoldier);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        builder.append("\nPrivates:\n");
+
+        for (Private aPrivate : this.getPrivates()) {
+            builder.append(String.format("  %s\n", aPrivate.toString()));
+        }
+
+        return builder.toString().trim();
     }
 }
