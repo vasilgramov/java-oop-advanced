@@ -9,7 +9,7 @@ public class PowerBoat extends AbstractBoat {
 
     private Engine[] engines;
 
-    protected PowerBoat(String model, int weight, Engine engine1, Engine engine2) {
+    public PowerBoat(String model, int weight, Engine engine1, Engine engine2) {
         super(model, weight, HAS_MOTOR);
         this.engines = new Engine[2];
         this.engines[0] = engine1;
@@ -20,6 +20,6 @@ public class PowerBoat extends AbstractBoat {
     public void calcSpeed(Race race) {
         super.setSpeed((this.engines[0].getOutput() + this.engines[1].getOutput()) -
                 super.getWeight() +
-                (race.getOceanSpeed() / 5));
+                (race.getOceanSpeed() / 5.0));
     }
 }

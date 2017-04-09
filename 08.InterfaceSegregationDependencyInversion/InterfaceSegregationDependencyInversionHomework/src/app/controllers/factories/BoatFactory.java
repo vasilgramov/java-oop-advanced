@@ -12,8 +12,9 @@ import java.lang.reflect.InvocationTargetException;
 public class BoatFactory {
 
     public static Modelable createBoat(BoatType boatType, String[] ctor, Database database) throws ClassNotFoundException, NonExistantModelException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Class<?> boat = Class.forName(boatType.toString() + "Boat");
+        Class<?> boat = Class.forName("app.models.boats." + boatType.toString() + "Boat");
 
+        Constructor<?>[] constructors = boat.getConstructors();
         Constructor<?> constructor = boat.getConstructors()[0];
         Object[] objects = new Object[constructor.getParameterCount()];
 

@@ -9,14 +9,15 @@ import java.lang.reflect.InvocationTargetException;
 public class EngineFactory {
 
     public static Modelable createEngine(EngineType engineType, String[] ctor) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        Class<?> engine = Class.forName(engineType.toString() + "Engine");
+        String name = "app.models.engines" + engineType.toString() + "Engine";
+        Class<?> engine = Class.forName("app.models.engines." + engineType.toString() + "Engine");
 
         Constructor<?> constructor = engine.getConstructors()[0];
         Object[] objects = new Object[constructor.getParameterCount()];
 
         Class<?>[] parameterTypes = constructor.getParameterTypes();
         for (int i = 0; i < parameterTypes.length; i++) {
-            String parameterTypeName = parameterTypes.getClass().getSimpleName();
+            String parameterTypeName = parameterTypes[i].getSimpleName();
             switch (parameterTypeName) {
                 case "String":
                     objects[i] = ctor[i];

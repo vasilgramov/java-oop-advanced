@@ -22,13 +22,15 @@ public class CommandHandlerImpl implements CommandHandler {
         this.raceController = new RaceControllerImpl(database);
     }
 
-    public String executeCommand(String name, List<String> parameters)
+    public String executeCommand(List<String> parameters)
             throws DuplicateModelException, NonExistantModelException, RaceAlreadyExistsException, NoSetRaceException,
             InsufficientContestantsException, ClassNotFoundException, InvocationTargetException, InstantiationException,
             IllegalAccessException {
-        switch (name) {
+        String commandType = parameters.remove(0);
+        switch (commandType) {
             case "CreateBoatEngine": {
-                EngineType engineType = EngineType.valueOf(parameters.remove(0));
+                String remove = parameters.remove(parameters.size() - 1);
+                EngineType engineType = EngineType.valueOf(remove);
                 String[] ctor = parameters.toArray(new String[parameters.size()]);
                 return this.boatController.createBoatEngine(engineType, ctor);
             }
@@ -36,7 +38,7 @@ public class CommandHandlerImpl implements CommandHandler {
             case "CreateSailBoat":
             case "CreatePowerBoat":
             case "CreateYacht": {
-                BoatType boatType = BoatType.valueOf(parameters.remove(0));
+                BoatType boatType = BoatType.valueOf(commandType.replace("Create", "").replace("Boat", ""));
                 String[] ctor = parameters.toArray(new String[parameters.size()]);
                 return this.boatController.createBoat(boatType, ctor);
             }

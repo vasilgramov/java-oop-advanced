@@ -6,7 +6,7 @@ import app.contracts.Race;
 public abstract class AbstractBoat implements Boat {
     private String model;
     private int weight;
-    private int speed;
+    private double speed;
     private boolean hasMotor;
 
     protected AbstractBoat(String model, int weight, boolean hasMotor) {
@@ -26,7 +26,7 @@ public abstract class AbstractBoat implements Boat {
     }
 
     @Override
-    public int getSped() {
+    public double getSped() {
         return this.speed;
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractBoat implements Boat {
         return this.hasMotor;
     }
 
-    protected void setSpeed(int speed) {
+    protected void setSpeed(double speed) {
         this.speed = speed;
     }
 }

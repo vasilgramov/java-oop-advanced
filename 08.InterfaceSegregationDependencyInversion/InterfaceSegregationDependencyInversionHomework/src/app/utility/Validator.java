@@ -3,6 +3,7 @@ package app.utility;
 public class Validator {
     public static void validatePropertyValue(int value, String propertyName) {
         if (value <= 0) {
+            System.out.println(String.format(Constants.IncorrectPropertyValueMessage, propertyName));
             throw new IllegalArgumentException(String.format(Constants.IncorrectPropertyValueMessage, propertyName));
         }
     }

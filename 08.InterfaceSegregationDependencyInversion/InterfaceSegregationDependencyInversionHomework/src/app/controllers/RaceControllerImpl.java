@@ -9,11 +9,11 @@ import app.enumeration.Leaderboard;
 import app.models.races.RaceImpl;
 import app.utility.Constants;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class RaceControllerImpl implements RaceController {
+    private static final double HAS_NOT_FINISHED = 2017.17;
+
     private Race currentRace;
     private Database database;
 
@@ -31,7 +31,7 @@ public class RaceControllerImpl implements RaceController {
         this.currentRace = race;
 
         return String.format(
-                "A new race with distance %s meters, wind speed %sm/s and ocean current speed %s m/s has been set.",
+                "A new race with distance %s meters, wind speed %s m/s and ocean current speed %s m/s has been set.",
                 distance,
                 windSpeed,
                 oceanCurrentSpeed);
@@ -43,11 +43,10 @@ public class RaceControllerImpl implements RaceController {
 
         this.validateRaceIsSet();
 
-        if (this.currentRace.allowsMotorboats() && !boat.hasMotor()) {
+        if (!this.currentRace.allowsMotorboats() && boat.hasMotor()) {
             throw new IllegalArgumentException(Constants.IncorrectBoatTypeMessage);
         }
 
-        boat.calcSpeed(this.currentRace);
         this.currentRace.addParticipant(boat);
 
         return String.format(
@@ -64,18 +63,20 @@ public class RaceControllerImpl implements RaceController {
             throw new InsufficientContestantsException(Constants.InsufficientContestantsMessage);
         }
 
-        Map<Double, Boat> leaderboard = this.getLeaderboard(participants);
+        Map<Boat, Double> leaderboard = this.getLeaderboard(participants);
 
         final int[] position = { 0 };
         StringBuilder result = new StringBuilder();
         leaderboard.entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
                 .limit(3)
                 .forEach(p -> {
-                    result.append(String.format("%s: %s Model: %s Time: %s",
+                    result.append(String.format("%s place: %s Model: %s Time: %s",
                             Leaderboard.values()[position[0]++],
-                            p.getValue().getClass().getSimpleName(),
-                            p.getValue().getModel(),
-                            this.hasFinished(p.getKey())));
+                            p.getKey().getClass().getSimpleName(),
+                            p.getKey().getModel(),
+                            this.hasFinished(p.getValue())))
+                    .append(System.lineSeparator());
                 });
 
         this.closeRace();
@@ -86,12 +87,12 @@ public class RaceControllerImpl implements RaceController {
         this.currentRace = null;
     }
 
-    private String hasFinished(Double time) {
-        if (time == Double.NEGATIVE_INFINITY || time == 0.0) {
+    private String hasFinished(double time) {
+        if (time == HAS_NOT_FINISHED || time <= 0.0) {
             return "Did not finish!";
         }
 
-        return String.format("%f.2 sec", time);
+        return String.format("%.2f sec", time);
     }
 
     private void validateRaceIsSet() throws NoSetRaceException {
@@ -106,13 +107,18 @@ public class RaceControllerImpl implements RaceController {
         }
     }
 
-    private Map<Double, Boat> getLeaderboard(List<Boat> participants) {
-        Map<Double, Boat> leaderboard = new TreeMap<>();
+    private Map<Boat, Double> getLeaderboard(List<Boat> participants) {
+        Map<Boat, Double> leaderboard = new LinkedHashMap<>();
 
         for (Boat participant : participants) {
-            double time = this.currentRace.getDistance() / participant.getSped();
+            participant.calcSpeed(this.currentRace);
 
-            leaderboard.put(time, participant);
+            double time = this.currentRace.getDistance() / participant.getSped();
+            if (time <= 0) {
+                time = HAS_NOT_FINISHED;
+            }
+
+            leaderboard.put(participant, time);
         }
 
         return leaderboard;

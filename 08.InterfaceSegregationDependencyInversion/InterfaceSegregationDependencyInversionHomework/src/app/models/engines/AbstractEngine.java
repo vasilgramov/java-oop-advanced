@@ -19,7 +19,7 @@ public abstract class AbstractEngine implements Engine {
     }
 
     @Override
-    public int getOutput() {
+    public double getOutput() {
         return this.horsePower + this.displacement;
     }
 }

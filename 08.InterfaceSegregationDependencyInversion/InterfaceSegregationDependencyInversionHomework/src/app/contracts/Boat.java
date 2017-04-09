@@ -4,7 +4,7 @@ public interface Boat extends Modelable {
 
     int getWeight();
 
-    int getSped();
+    double getSped();
 
     boolean hasMotor();
 

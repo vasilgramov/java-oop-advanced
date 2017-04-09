@@ -43,9 +43,11 @@ public class BoatControllerImpl implements BoatController {
         Modelable boat = BoatFactory.createBoat(boatType, ctor, this.database);
         this.database.getBoats().add(boat);
 
+        String boatTypePrint = boatType.toString().equals("Yacht") ? boatType.toString() : boatType.toString() + " boat";
+
         return String.format(
-                "%s boat with model %s registered successfully.",
-                boatType.toString(),
+                "%s with model %s registered successfully.",
+                boatTypePrint,
                 boat.getModel());
     }
 }
