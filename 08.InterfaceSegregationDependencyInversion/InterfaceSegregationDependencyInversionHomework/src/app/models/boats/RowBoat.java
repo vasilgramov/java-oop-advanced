@@ -3,10 +3,12 @@ package app.models.boats;
 import app.contracts.Race;
 
 public class RowBoat extends AbstractBoat {
+    private static final boolean HAS_MOTOR = false;
+
     private int oars;
 
     public RowBoat(String model, int weight, int oars) {
-        super(model, weight);
+        super(model, weight, HAS_MOTOR);
         this.oars = oars;
     }
 

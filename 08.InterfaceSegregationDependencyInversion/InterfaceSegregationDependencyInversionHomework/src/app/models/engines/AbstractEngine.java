@@ -7,7 +7,8 @@ public abstract class AbstractEngine implements Engine {
     private int horsePower;
     private int displacement;
 
-    protected AbstractEngine(int horsePower, int displacement) {
+    protected AbstractEngine(String model, int horsePower, int displacement) {
+        this.model = model;
         this.horsePower = horsePower;
         this.displacement = displacement;
     }

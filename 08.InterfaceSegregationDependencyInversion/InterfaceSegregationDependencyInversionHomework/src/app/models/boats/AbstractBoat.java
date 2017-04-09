@@ -7,10 +7,12 @@ public abstract class AbstractBoat implements Boat {
     private String model;
     private int weight;
     private int speed;
+    private boolean hasMotor;
 
-    protected AbstractBoat(String model, int weight) {
+    protected AbstractBoat(String model, int weight, boolean hasMotor) {
         this.model = model;
         this.weight = weight;
+        this.hasMotor = hasMotor;
     }
 
     @Override
@@ -28,9 +30,12 @@ public abstract class AbstractBoat implements Boat {
         return this.speed;
     }
 
+    @Override
+    public boolean hasMotor() {
+        return this.hasMotor;
+    }
+
     protected void setSpeed(int speed) {
         this.speed = speed;
     }
-
-    protected abstract void calcSpeed(Race race);
 }

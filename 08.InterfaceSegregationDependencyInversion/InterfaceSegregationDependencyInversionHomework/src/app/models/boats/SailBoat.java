@@ -3,15 +3,17 @@ package app.models.boats;
 import app.contracts.Race;
 
 public class SailBoat extends AbstractBoat {
+    private static final boolean HAS_MOTOR = false;
+
     private int sailEfficiency;
 
     public SailBoat(String model, int weight, int sailEfficiency) {
-        super(model, weight);
+        super(model, weight, HAS_MOTOR);
         this.sailEfficiency = sailEfficiency;
     }
 
     @Override
-    protected void calcSpeed(Race race) {
+    public void calcSpeed(Race race) {
         super.setSpeed(race.getWindSpeed() *
                 (this.sailEfficiency / 100) -
                 super.getWeight() +

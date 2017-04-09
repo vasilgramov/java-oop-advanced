@@ -5,10 +5,12 @@ import app.contracts.Engine;
 import app.contracts.Race;
 
 public class PowerBoat extends AbstractBoat {
+    private static final boolean HAS_MOTOR = true;
+
     private Engine[] engines;
 
     protected PowerBoat(String model, int weight, Engine engine1, Engine engine2) {
-        super(model, weight);
+        super(model, weight, HAS_MOTOR);
         this.engines = new Engine[2];
         this.engines[0] = engine1;
         this.engines[1] = engine2;

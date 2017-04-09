@@ -1,10 +1,9 @@
 package app.core;
 
-import app.contracts.BoatSimulatorController;
-import app.database.BoatSimulatorDatabase;
-import app.exeptions.*;
+import app.contracts.CommandHandler;
+import app.contracts.Database;
+import app.database.DatabaseImpl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,26 +16,14 @@ public class Engine {
         this.commandHandler = commandHandler;
     }
 
-    public Engine() {
-        this.commandHandler = new CommandHandler();
-    }
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
 
-    public ICommandHandler getCommandHandler;
-
-    public void Run() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            String line = scanner.nextLine();
-            String name = "";
-            List<String> parameters = new ArrayList<>();
-
-            if (line.equals("End")) {
-                break;
-            }
-
+        String line = scanner.nextLine();
+        while (line.equals("End")) {
             List<String> tokens = Arrays.asList(line.split("\\\\"));
-            name = tokens.get(0);
-            parameters = tokens.stream().skip(1).collect(Collectors.toList());
+            String name = tokens.get(0);
+            List<String> parameters = tokens.stream().skip(1).collect(Collectors.toList());
 
             try {
                 String commandResult = this.commandHandler.executeCommand(name, parameters);
@@ -50,66 +37,10 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-        BoatSimulatorController ctrl = new BoatSimulatorController() {
-            @Override
-            public IRace getCurrentRace() {
-                return null;
-            }
+        Database database = new DatabaseImpl();
 
-            @Override
-            public BoatSimulatorDatabase getDatabase() {
-                return null;
-            }
-
-            @Override
-            public String CreateBoatEngine(String model, int horsepower, int displacement, String engineType) {
-                return null;
-            }
-
-            @Override
-            public String CreateRowBoat(String model, int weight, int oars) throws DuplicateModelException {
-                return null;
-            }
-
-            @Override
-            public String CreateSailBoat(String model, int weight, int sailEfficiency) throws DuplicateModelException {
-                return null;
-            }
-
-            @Override
-            public String CreatePowerBoat(String model, int weight, String firstEngineModel, String secondEngineModel) throws NonExistantModelException, DuplicateModelException {
-                return null;
-            }
-
-            @Override
-            public String CreateYacht(String model, int weight, String engineModel, int cargoWeight) throws
-                    NonExistantModelException, DuplicateModelException {
-                return null;
-            }
-
-            @Override
-            public String OpenRace(int distance, int windSpeed, int oceanCurrentSpeed, Boolean allowsMotorboats) throws RaceAlreadyExistsException {
-                return null;
-            }
-
-            @Override
-            public String SignUpBoat(String model) throws NonExistantModelException, DuplicateModelException, NoSetRaceException {
-                return null;
-            }
-
-            @Override
-            public String StartRace() throws InsufficientContestantsException, NoSetRaceException {
-                return null;
-            }
-
-            @Override
-            public String GetStatistic() {
-                return null;
-            }
-        };
-
-        CommandHandler commandHandler = new CommandHandler(ctrl);
-        Engine engine = new Engine();
-        engine.Run();
+        CommandHandler commandHandler = new CommandHandlerImpl(database);
+        Engine engine = new Engine(commandHandler);
+        engine.run();
     }
 }

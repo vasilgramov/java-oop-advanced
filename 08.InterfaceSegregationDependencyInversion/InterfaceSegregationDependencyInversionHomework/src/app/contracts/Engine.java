@@ -1,8 +1,6 @@
 package app.contracts;
 
-public interface Engine {
-
-    String getModel();
+public interface Engine extends Modelable {
 
     int getOutput();
 
