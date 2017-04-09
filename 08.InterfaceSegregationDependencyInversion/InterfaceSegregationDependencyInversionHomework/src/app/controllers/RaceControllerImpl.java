@@ -65,7 +65,7 @@ public class RaceControllerImpl implements RaceController {
 
         Map<Boat, Double> leaderboard = this.getLeaderboard(participants);
 
-        final int[] position = { 0 };
+        final int[] position = {0};
         StringBuilder result = new StringBuilder();
         leaderboard.entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getValue))
@@ -76,11 +76,40 @@ public class RaceControllerImpl implements RaceController {
                             p.getKey().getClass().getSimpleName(),
                             p.getKey().getModel(),
                             this.hasFinished(p.getValue())))
-                    .append(System.lineSeparator());
+                            .append(System.lineSeparator());
                 });
 
         this.closeRace();
         return result.toString();
+    }
+
+    @Override
+    public String getStatistic() {
+        List<Boat> participants = this.currentRace.getParticipants();
+        Map<String, Integer> countByBoatType = new TreeMap<>();
+        participants.stream()
+                .forEach(p -> {
+                    String boatType = p.getClass().getSimpleName();
+                    if (!countByBoatType.containsKey(boatType)) {
+                        countByBoatType.put(boatType, 1);
+                    } else {
+                        countByBoatType.put(boatType, countByBoatType.get(boatType) + 1);
+                    }
+                });
+
+        StringBuilder builder = new StringBuilder();
+        countByBoatType.entrySet().stream()
+                .forEach(p -> {
+                    builder
+                        .append(String.format("%s -> %.2f", p.getKey(), this.calcPercentage(participants, p)) + "%")
+                        .append(System.lineSeparator());
+                });
+
+        return builder.toString().trim();
+    }
+
+    private double calcPercentage(List<Boat> participants, Map.Entry<String, Integer> p) {
+        return p.getValue() * 100.0 / participants.size();
     }
 
     private void closeRace() {

@@ -54,7 +54,7 @@ public class CommandHandlerImpl implements CommandHandler {
             case "StartRace":
                 return this.raceController.startRace();
             case "GetStatistic":
-                throw new UnsupportedOperationException("Not implemented");
+                return this.raceController.getStatistic();
             default:
                 throw new IllegalArgumentException("Wrong command");
         }

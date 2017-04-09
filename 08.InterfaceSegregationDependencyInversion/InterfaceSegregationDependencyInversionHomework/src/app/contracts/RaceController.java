@@ -11,4 +11,6 @@ public interface RaceController {
     String signUpBoat(String model) throws NonExistantModelException, DuplicateModelException, NoSetRaceException;
 
     String startRace() throws InsufficientContestantsException, NoSetRaceException;
+
+    String getStatistic();
 }
