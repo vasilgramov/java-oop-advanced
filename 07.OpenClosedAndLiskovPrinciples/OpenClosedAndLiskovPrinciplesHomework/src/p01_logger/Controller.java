@@ -12,6 +12,7 @@ public class Controller {
 
     public void info() {
         Appender[] appenders = this.logger.getAppenders();
+        System.out.println("Logger info");
 
         for (Appender appender : appenders) {
             System.out.println(appender.toString());

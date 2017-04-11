@@ -40,12 +40,4 @@ public class Engine {
             line = scanner.nextLine();
         }
     }
-
-    public static void main(String[] args) {
-        Database database = new DatabaseImpl();
-
-        CommandHandler commandHandler = new CommandHandlerImpl(database);
-        Engine engine = new Engine(commandHandler);
-        engine.run();
-    }
 }

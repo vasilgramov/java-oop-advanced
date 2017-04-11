@@ -48,7 +48,7 @@ public class FileAppender implements Appender {
 
     @Override
     public String toString() {
-        return String.format("Appender type: %s, Layout type: %s,  Report level: %s, Messages appended: %d, File size: %d",
+        return String.format("Appender type: %s, Layout type: %s, Report level: %s, Messages appended: %d, File size: %d",
                 this.getType(), this.layout.getType(), this.minReportLevel.toString(), this.getMessagesAppended(), this.file.getSize());
     }
 }
