@@ -1,5 +1,7 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.exceptions.InvalidInputException;
 import bg.softuni.io.IOManager;
 import bg.softuni.io.OutputWriter;
@@ -8,15 +10,15 @@ import bg.softuni.network.DownloadManager;
 import bg.softuni.repository.StudentsRepository;
 import bg.softuni.staticData.ExceptionMessages;
 
+@Alias(value = "filter")
 public class PrintFilteredStudentsCommand extends Command {
 
+    @Inject
+    private StudentsRepository repository;
+
     public PrintFilteredStudentsCommand(String input,
-                                        String[] data,
-                                        Tester tester,
-                                        StudentsRepository repository,
-                                        DownloadManager downloadManager,
-                                        IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                                        String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -43,13 +45,13 @@ public class PrintFilteredStudentsCommand extends Command {
         }
 
         if (takeQuantity.equals("all")) {
-            this.getRepository().filterAndTake(courseName, filter);
+            this.repository.filterAndTake(courseName, filter);
             return;
         }
 
         try {
             int studentsToTake = Integer.parseInt(takeQuantity);
-            this.getRepository().filterAndTake(courseName, filter, studentsToTake);
+            this.repository.filterAndTake(courseName, filter, studentsToTake);
         } catch (NumberFormatException nfe) {
             OutputWriter.displayException(ExceptionMessages.IVALID_TAKE_QUANTITY_PARAMETER);
         }

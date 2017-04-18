@@ -1,5 +1,7 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.dataStructures.SimpleOrderedBag;
 import bg.softuni.dataStructures.SimpleSortedList;
 import bg.softuni.exceptions.InvalidInputException;
@@ -16,11 +18,17 @@ import java.util.Comparator;
 /**
  * Created by vladix on 4/17/17.
  */
+
+@Alias(value = "display")
 public class DisplayCommand extends Command {
 
+    @Inject
+    private StudentsRepository repository;
+
     public DisplayCommand(
-            String input, String[] data, Tester tester, StudentsRepository repository, DownloadManager downloadManager, IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+            String input,
+            String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -34,11 +42,11 @@ public class DisplayCommand extends Command {
         String sortType = data[2];
         if (entityToDisplay.equals("students")) {
             Comparator<Student> cmp = this.createStudentsComparator(sortType);
-            SimpleOrderedBag<Student> sortedStudents = super.getRepository().getAllStudentsSorted(cmp);
+            SimpleOrderedBag<Student> sortedStudents = this.repository.getAllStudentsSorted(cmp);
             OutputWriter.writeMessageOnNewLine(sortedStudents.joinWith(System.lineSeparator()));
         } else if (entityToDisplay.equals("courses")) {
             Comparator<Course> cmp = this.createCoursesComparator(sortType);
-            SimpleOrderedBag<Course> sortedStudents = super.getRepository().getAllCoursedSorted(cmp);
+            SimpleOrderedBag<Course> sortedStudents = this.repository.getAllCoursedSorted(cmp);
             OutputWriter.writeMessageOnNewLine(sortedStudents.joinWith(System.lineSeparator()));
         }
     }

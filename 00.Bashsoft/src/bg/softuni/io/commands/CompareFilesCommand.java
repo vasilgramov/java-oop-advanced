@@ -1,20 +1,22 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.exceptions.InvalidInputException;
 import bg.softuni.io.IOManager;
 import bg.softuni.judge.Tester;
 import bg.softuni.network.DownloadManager;
 import bg.softuni.repository.StudentsRepository;
 
+@Alias(value = "cmp")
 public class CompareFilesCommand extends Command {
 
+    @Inject
+    private Tester tester;
+
     public CompareFilesCommand(String input,
-                               String[] data,
-                               Tester tester,
-                               StudentsRepository repository,
-                               DownloadManager downloadManager,
-                               IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                               String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -26,6 +28,6 @@ public class CompareFilesCommand extends Command {
 
         String firstPath = data[1];
         String secondPath = data[2];
-        this.getTester().compareContent(firstPath, secondPath);
+        this.tester.compareContent(firstPath, secondPath);
     }
 }

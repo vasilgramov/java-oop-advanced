@@ -1,5 +1,7 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.exceptions.InvalidInputException;
 import bg.softuni.io.IOManager;
 import bg.softuni.io.OutputWriter;
@@ -7,15 +9,15 @@ import bg.softuni.judge.Tester;
 import bg.softuni.network.DownloadManager;
 import bg.softuni.repository.StudentsRepository;
 
+@Alias(value = "dropdb")
 public class DropDatabaseCommand extends Command {
 
+    @Inject
+    private StudentsRepository repository;
+
     public DropDatabaseCommand(String input,
-                               String[] data,
-                               Tester tester,
-                               StudentsRepository repository,
-                               DownloadManager downloadManager,
-                               IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                               String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,7 +27,7 @@ public class DropDatabaseCommand extends Command {
             throw new InvalidInputException(this.getInput());
         }
 
-        this.getRepository().unloadData();
+        this.repository.unloadData();
         OutputWriter.writeMessageOnNewLine("Database dropped!");
     }
 }

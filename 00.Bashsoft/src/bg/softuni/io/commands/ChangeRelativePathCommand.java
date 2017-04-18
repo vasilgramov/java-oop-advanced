@@ -1,20 +1,24 @@
 package bg.softuni.io.commands;
 
+import bg.softuni.annotations.Alias;
+import bg.softuni.annotations.Inject;
 import bg.softuni.exceptions.InvalidInputException;
 import bg.softuni.io.IOManager;
 import bg.softuni.judge.Tester;
 import bg.softuni.network.DownloadManager;
 import bg.softuni.repository.StudentsRepository;
 
+import javax.naming.spi.DirectoryManager;
+
+@Alias(value = "cdrel")
 public class ChangeRelativePathCommand extends Command {
 
+    @Inject
+    private IOManager ioManager;
+
     public ChangeRelativePathCommand(String input,
-                                     String[] data,
-                                     Tester tester,
-                                     StudentsRepository repository,
-                                     DownloadManager downloadManager,
-                                     IOManager ioManager) {
-        super(input, data, tester, repository, downloadManager, ioManager);
+                                     String[] data) {
+        super(input, data);
     }
 
     @Override
@@ -25,6 +29,6 @@ public class ChangeRelativePathCommand extends Command {
         }
 
         String relativePath = data[1];
-        this.getIoManager().changeCurrentDirRelativePath(relativePath);
+        this.ioManager.changeCurrentDirRelativePath(relativePath);
     }
 }
