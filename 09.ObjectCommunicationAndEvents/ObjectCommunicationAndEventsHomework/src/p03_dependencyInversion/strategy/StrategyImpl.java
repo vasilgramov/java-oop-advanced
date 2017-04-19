@@ -3,11 +3,12 @@ package p03_dependencyInversion.strategy;
 /**
  * Created by vladix on 4/12/17.
  */
-public class StrategyImpl implements Strategy {
+public class StrategyImpl implements StrategyGetterChanger {
 
     private char strategy;
 
     public StrategyImpl() {
+        this.strategy = '+';
     }
 
     @Override
@@ -16,7 +17,7 @@ public class StrategyImpl implements Strategy {
     }
 
     @Override
-    public void changeStrategy(char operator) {
-        this.strategy = operator;
+    public void changeStrategy(char newStrategy) {
+        this.strategy = newStrategy;
     }
 }

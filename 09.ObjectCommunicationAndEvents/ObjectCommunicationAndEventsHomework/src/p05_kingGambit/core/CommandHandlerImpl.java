@@ -1,9 +1,9 @@
-package p02_kingGambit.core;
+package p05_kingGambit.core;
 
-import p02_kingGambit.castle.Castle;
-import p02_kingGambit.castle.CastleImpl;
-import p02_kingGambit.models.Footman;
-import p02_kingGambit.models.RoyalGuard;
+import p05_kingGambit.castle.CastleImpl;
+import p05_kingGambit.models.Footman;
+import p05_kingGambit.models.RoyalGuard;
+import p05_kingGambit.castle.Castle;
 
 import java.util.Scanner;
 

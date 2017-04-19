@@ -1,7 +1,7 @@
-package p02_kingGambit;
+package p05_kingGambit;
 
-import p02_kingGambit.core.CommandHandler;
-import p02_kingGambit.core.CommandHandlerImpl;
+import p05_kingGambit.core.CommandHandlerImpl;
+import p05_kingGambit.core.CommandHandler;
 
 /**
  * Created by vladix on 4/12/17.
