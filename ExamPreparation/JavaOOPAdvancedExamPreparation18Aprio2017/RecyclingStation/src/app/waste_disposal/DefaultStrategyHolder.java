@@ -1,0 +1,55 @@
+package app.waste_disposal;
+
+import app.waste_disposal.contracts.GarbageDisposalStrategy;
+import app.waste_disposal.contracts.StrategyHolder;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class DefaultStrategyHolder implements StrategyHolder {
+
+    private Map<Class,GarbageDisposalStrategy> strategies;
+
+    public DefaultStrategyHolder() {
+        this.strategies = new LinkedHashMap<>();
+    }
+
+    @Override
+    public Map<Class, GarbageDisposalStrategy> getDisposalStrategies() {
+        return Collections.unmodifiableMap(this.strategies);
+    }
+
+    @Override
+    public boolean addStrategy(Class annotationClass, GarbageDisposalStrategy strategy) {
+        if (annotationClass == null) {
+            throw new IllegalArgumentException("Annotation class is null!");
+        }
+
+        if (strategy == null) {
+            throw new IllegalArgumentException("Strategy is null!");
+        }
+
+        if (this.strategies.containsKey(annotationClass)) {
+            throw new IllegalArgumentException("Annotation class is already presented!");
+        }
+
+        this.strategies.put(annotationClass,strategy);
+        return true;
+    }
+
+    @Override
+    public boolean removeStrategy(Class annotationClass) {
+        if (annotationClass == null) {
+            throw new IllegalArgumentException("Annotation class is null!");
+        }
+
+        if (!this.strategies.containsKey(annotationClass)) {
+            throw new IllegalArgumentException("Annotation class in not presented!");
+        }
+
+        this.strategies.remove(annotationClass);
+        return true;
+    }
+
+}
