@@ -31,7 +31,7 @@ public class DefaultStrategyHolder implements StrategyHolder {
         }
 
         if (this.strategies.containsKey(annotationClass)) {
-            throw new IllegalArgumentException("Annotation class is already presented!");
+            return false;
         }
 
         this.strategies.put(annotationClass,strategy);
@@ -45,7 +45,7 @@ public class DefaultStrategyHolder implements StrategyHolder {
         }
 
         if (!this.strategies.containsKey(annotationClass)) {
-            throw new IllegalArgumentException("Annotation class in not presented!");
+            return false;
         }
 
         this.strategies.remove(annotationClass);

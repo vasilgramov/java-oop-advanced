@@ -51,10 +51,13 @@ public class StrategyHolderTest {
         this.strategyHolder.addStrategy(Burnable.class, null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void addStrategy_AlreadyRegistered_ThrowException() {
         this.strategyHolder.addStrategy(Burnable.class, new BurnableDisposalStrategy());
-        this.strategyHolder.addStrategy(Burnable.class, new BurnableDisposalStrategy());
+        boolean result = this.strategyHolder.addStrategy(Burnable.class, new BurnableDisposalStrategy());
+        boolean expected = false;
+
+        Assert.assertEquals(expected, result);
     }
 
     @Test
@@ -72,9 +75,13 @@ public class StrategyHolderTest {
         this.strategyHolder.removeStrategy(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void removeStrategy_UnregisteredClass_ThrowException() {
-        this.strategyHolder.removeStrategy(Burnable.class);
+        boolean result = this.strategyHolder.removeStrategy(Burnable.class);
+
+        boolean expected = false;
+
+        Assert.assertEquals(expected, result);
     }
 
 }
